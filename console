@@ -1,0 +1,21 @@
+#!/usr/bin/env php
+<?php declare(strict_types=1);
+
+require_once __DIR__ . '/bootstrap.php';
+
+use GustavoGama\MetatraderReportTransformer\Commands\ReportImporter;
+use GustavoGama\MetatraderReportTransformer\DataSources\DataSourceInterface;
+use GustavoGama\MetatraderReportTransformer\Persistence\Repositories\PositionInterface;
+use Symfony\Component\Console\Application;
+
+$application = new Application(
+    'Metatrader 5 report transformer',
+    '1.0'
+);
+
+$application->add(new ReportImporter(
+    $container->get(DataSourceInterface::class),
+    $container->get(PositionInterface::class)
+));
+
+$application->run();

@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  api:
+    image: metatrader-importer
+    build: .
+    command: php -S 0.0.0.0:8080 -t .
+    ports:
+      - 8080:8080
+    volumes:
+      - ./:/app
+    networks:
+      - metatrader
+
+  report-importer:
+    image: metatrader-importer
+    command: ./console report:import
+    volumes:
+      - ./:/app
+    networks:
+      - metatrader
+
+  composer:
+    image: metatrader-importer
+    command: composer install
+    volumes:
+      - ./:/app
+
+  db-migrator:
+    image: metatrader-importer
+    command: ./vendor/bin/phoenix migrate
+    depends_on:
+      - db
+    volumes:
+      - ./:/app
+    networks:
+      - metatrader
+
+  db:
+    image: mariadb:10.5.12
+    environment:
+      MARIADB_ROOT_PASSWORD: root
+      MARIADB_DATABASE: metatrader
+    volumes:
+      - metatrader:/var/lib/mysql
+    ports:
+      - "13306:3306"
+    networks:
+      - metatrader
+
+volumes:
+  metatrader:
+networks:
+  metatrader:
