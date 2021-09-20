@@ -13,6 +13,7 @@ if (is_readable($envFilePath)) {
 
 $builder = new ContainerBuilder();
 $builder->addDefinitions(__DIR__ . '/config/datasource.php');
+$builder->addDefinitions(__DIR__ . '/config/datatransformer.php');
 $builder->addDefinitions(__DIR__ . '/config/persistence.php');
 $builder->addDefinitions(__DIR__ . '/config/database.php');
 $builder->addDefinitions(__DIR__ . '/config/controller.php');

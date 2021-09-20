@@ -9,16 +9,15 @@ class CreatePositionTable extends IlluminateSchemaMigration
     {
         $this->schema->create('positions', function(Blueprint $table){
             $table->integer('id')->unique();
-            $table->date('entry_time');
+            $table->date('date');
             $table->string('symbol', 10);
             $table->enum('type', ['buy', 'sell']);
             $table->smallInteger('volume');
-            $table->decimal('entry_price', 10, 2);
-            $table->decimal('stop_loss', 10, 2)->nullable();
-            $table->decimal('take_profit', 10, 2)->nullable();
-            $table->decimal('exit_price', 10, 2)->nullable();
+            $table->decimal('points', 10, 2);
             $table->decimal('commission', 10, 2);
+            $table->boolean('is_gain');
             $table->decimal('profit', 10, 2);
+            $table->decimal('balance', 10, 2);
         });
     }
 

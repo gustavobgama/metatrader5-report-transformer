@@ -55,6 +55,7 @@ class HtmlDataSource implements DataSourceInterface
                 $foundTheHeader = ($tr->filter('th div b')->count() != 0 && $tr->filter('th div b')->html() == 'Positions');
             }
         });
+        $headers = $this->prepareHeaders($headers);
         // TODO: improve the condition on line 48 and remove this instruction
         array_pop($values);
         $chunks = array_chunk($values, count($headers));
@@ -64,5 +65,16 @@ class HtmlDataSource implements DataSourceInterface
         $this->domCrawler->clear();
 
         return $positions;
+    }
+
+    private function prepareHeaders(array $headers): array
+    {
+        $unique = array_unique($headers);
+        $duplicates = array_diff_assoc($headers, $unique);
+        foreach ($duplicates as $index => $headerName) {
+            $headers[$index] = "{$headerName}_1";
+        }
+
+        return $headers;
     }
 }
