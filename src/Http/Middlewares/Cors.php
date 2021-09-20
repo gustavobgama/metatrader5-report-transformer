@@ -14,10 +14,7 @@ class Cors implements MiddlewareInterface
         $response = $handler->handle($request);
 
         $response = $response
-            ->withHeader('Access-Control-Allow-Origin', '*')
-            ->withHeader('Access-Control-Allow-Methods', 'GET, POST')
-            ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
-            ->withHeader('Access-Control-Allow-Credentials', 'true');
+            ->withHeader('Access-Control-Allow-Origin', '*');
         
         return $response;        
     }
